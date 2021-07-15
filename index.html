@@ -495,6 +495,12 @@
               nodes: {shape: "dot"},
               interaction: {hover: true},
               layout: {improvedLayout: true},
+              physics: {
+                  solver: "iforceAtlas2Based"
+              },
+              edges: {
+                  smooth: {type: "continuous"}
+              }
           }, customNetworkOptions);
 
           var configoptions = $.extend(true, {
@@ -548,10 +554,15 @@
               }
           });
 
-          globalNetwork = new vis.Network(document.getElementById("global-network"),
-                                          {nodes: view,
-                                           edges: edgeDataset},
+          globalNetwork = new vis.Network(document.getElementById("global-network"), {
+                                            nodes: view,
+                                            edges: edgeDataset
+                                          },
                                           configoptions);
+          globalNetwork.once('startStabilizing', function() {
+                  var scaleOption = { scale : 0.2 };
+                  globalNetwork.moveTo(scaleOption);
+          })
 
           var tempNetwork = new vis.Network(document.getElementById("temp-network"),
                                             {nodes: nodeDataset,
@@ -567,7 +578,7 @@
           globalNetwork.on("stabilizationIterationsDone", function () {
               network.setOptions( { physics: false } );
           });
-          
+
           $('#colormode-checkbox').change()
 
           function onStabilized () {
@@ -1106,6 +1117,7 @@
               globalNetwork.focus(nodeId, {
                   "animation": true
               })
+              globalNetwork.selectNodes([nodeId])
           }
 
           function refreshLocateNodeData() {
