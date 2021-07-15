@@ -177,8 +177,7 @@
           background-color: #1d1e20;
           color: #c7cec6 ;
       }
-     
-     
+
     </style>
   </head>
 
@@ -227,11 +226,11 @@
     <button class="btn btn-sm btn-primary btn-simple" id="toggle-preview">
       Enable Preview
     </button>
-    
+
     <button class="btn btn-sm btn-primary btn-simple" id="toggle-tweaks">
       Show Tweaks
     </button>
-    
+
     <div id="controls">
       <div id="dropdownfilters">
             <div>
@@ -281,7 +280,6 @@
       <iframe src="" id="backlinks"></iframe>
     </div>
 
-    
     <div id="config"></config>
 
     <script type="text/javascript">
@@ -496,7 +494,14 @@
               interaction: {hover: true},
               layout: {improvedLayout: true},
               physics: {
-                  solver: "iforceAtlas2Based"
+                  solver: "forceAtlas2Based",
+                  forceAtlas2Based: {
+                      gravitationalConstant: -200,
+                      centralGravity: 0.01,
+                      springConstant: 0.56,
+                      damping: 1,
+                      avoidOverlap: 0.5
+                  }
               },
               edges: {
                   smooth: {type: "continuous"}
